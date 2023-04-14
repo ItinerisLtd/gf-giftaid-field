@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Itineris\GfGiftaidField;
 
-use Itineris\GfGiftaidField\GiftAidField;
 use GF_Fields;
+use Itineris\GfGiftaidField\GiftAidField;
 
 class GfGiftAidField
 {
-    public static function load()
+    public static function load(): void
     {
         static::hooks();
 
         GF_Fields::register(new GiftAidField());
     }
 
-    public static function hooks()
+    public static function hooks(): void
     {
         add_action('wp_enqueue_scripts', [static::class, 'enqueueGiftAidScripts']);
         add_action('gform_enqueue_scripts', function (): void {

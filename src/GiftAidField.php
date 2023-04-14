@@ -6,8 +6,8 @@ namespace Itineris\GfGiftaidField;
 
 use GF_Field;
 
-class GiftAidField extends GF_Field {
-
+class GiftAidField extends GF_Field
+{
     public string $type = 'gift_aid';
 
     public function get_form_editor_field_title(): string
@@ -31,7 +31,7 @@ class GiftAidField extends GF_Field {
             'rules_setting',
             'error_message_setting',
             'css_class_setting',
-            'conditional_logic_field_setting'
+            'conditional_logic_field_setting',
         ];
     }
 
@@ -40,6 +40,7 @@ class GiftAidField extends GF_Field {
         return true;
     }
 
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
     public function get_field_input($form, $value = '', $entry = null): string
     {
         $id = (int) $this->id;
@@ -52,20 +53,23 @@ class GiftAidField extends GF_Field {
                 <img src="<?php echo esc_url($giftaidImage); ?>" alt="GiftAid logo">
             </div>
             <div class="description text-primary font-medium text-20px mb-2">
-                <p><?php echo $this->get_calculated_gift(); ?></p>
+                <?php //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                <p><?php echo wpautop(wp_kses_post($this->get_calculated_gift())); ?></p>
             </div>
             <div class="gift-box-form-wrapper">
                 <div class="ginput_container ginput_container_checkbox mb-6">
-                    <div class="gfield_checkbox" id="input_<?php echo $id; ?>">
-                        <div class="gchoice gchoice_<?php echo $id; ?>">
+                    <div class="gfield_checkbox" id="input_<?php echo esc_html($id); ?>">
+                        <div class="gchoice gchoice_<?php echo esc_html($id); ?>">
                             <input
                                 class="gfield-choice-input"
-                                id="gift-check-<?php echo $id; ?>"
-                                name="gift-check-<?php echo $id; ?>"
+                                id="gift-check-<?php echo esc_html($id); ?>"
+                                name="gift-check-<?php echo esc_html($id); ?>"
                                 type="checkbox"
                                 value="1"
                             >
-                            <label for="gift-check-<?php echo $id; ?>"><?php echo esc_html($this->label); ?></label>
+                            <label for="gift-check-<?php echo esc_html($id); ?>">
+                                <?php echo esc_html($this->label); ?>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -76,6 +80,7 @@ class GiftAidField extends GF_Field {
         return ob_get_clean();
     }
 
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
     public function get_field_content($value, $force_frontend_label, $form): string
     {
         $form_id         = $form['id'];
@@ -84,11 +89,16 @@ class GiftAidField extends GF_Field {
         $is_form_editor  = $this->is_form_editor();
         $is_admin        = $is_entry_detail || $is_form_editor;
         $field_label     = $this->get_field_label($force_frontend_label, $value);
-        $field_id        = $is_admin || $form_id == 0 ? "input_{$this->id}" : 'input_' . $form_id . "_{$this->id}";
-        $field_content   = ! $is_admin ? '{FIELD}' : $field_content = sprintf("%s<label class='gfield_label
-gform-field-label' for='%s'>%s</label>{FIELD}", $admin_buttons, $field_id, esc_html($field_label));
+        $field_id        = $is_admin || 0 === $form_id ? "input_{$this->id}" : 'input_' . $form_id . "_{$this->id}";
 
-        return $field_content;
+        return ! $is_admin
+            ? '{FIELD}'
+            : sprintf(
+                "%s<label class='gfield_label gform-field-label' for='%s'>%s</label>{FIELD}",
+                $admin_buttons,
+                $field_id,
+                esc_html($field_label),
+            );
     }
 
     public function get_calculated_gift(): string

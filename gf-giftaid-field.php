@@ -24,7 +24,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
 
-if (! defined('GIFT_AID_URI')) {
+if (! defined('ITINERIS_GF_GIFT_AID_FIELD_URI')) {
     define('ITINERIS_GF_GIFT_AID_FIELD_URI', WPMU_PLUGIN_URL . '/' . basename(__DIR__));
 }
 
