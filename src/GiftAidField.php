@@ -43,16 +43,16 @@ class GiftAidField extends GF_Field {
     public function get_field_input($form, $value = '', $entry = null): string
     {
         $id = (int) $this->id;
-        $giftaidImage = GIFT_AID_URI . '/assets/giftaid.svg';
+        $giftaidImage = ITINERIS_GF_GIFT_AID_FIELD_URI . '/assets/giftaid.svg';
 
         ob_start();
         ?>
         <div class="gift-box-wrapper">
             <div class="gift-aid-logo mb-2">
-                <img src="<?php echo $giftaidImage; ?>" alt="GiftAid logo">
+                <img src="<?php echo esc_url($giftaidImage); ?>" alt="GiftAid logo">
             </div>
             <div class="description text-primary font-medium text-20px mb-2">
-                <p><?php echo $this->get_calculated_gift(); ?></p>
+                <p><?php echo esc_html($this->get_calculated_gift()); ?></p>
             </div>
             <div class="gift-box-form-wrapper">
                 <div class="ginput_container ginput_container_checkbox mb-6">
@@ -65,12 +65,12 @@ class GiftAidField extends GF_Field {
                                 type="checkbox"
                                 value="1"
                             >
-                            <label for="gift-check-<?php echo $id; ?>"><?php echo $this->label; ?></label>
+                            <label for="gift-check-<?php echo $id; ?>"><?php echo esc_html($this->label); ?></label>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="details-description"><?php echo $this->description; ?></div>
+            <div class="details-description"><?php echo esc_html($this->description); ?></div>
         </div>
         <?php
         return ob_get_clean();

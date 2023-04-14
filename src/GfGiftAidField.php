@@ -28,7 +28,7 @@ class GfGiftAidField
     {
         wp_register_script(
             'gf-gift-aid-field',
-            GIFT_AID_URI . '/public/js/gift-aid.js',
+            ITINERIS_GF_GIFT_AID_FIELD_URI . '/public/js/gift-aid.js',
             [],
             null,
             true,
