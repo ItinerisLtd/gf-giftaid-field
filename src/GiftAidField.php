@@ -12,7 +12,7 @@ class GiftAidField extends GF_Field {
 
     public function get_form_editor_field_title(): string
     {
-        return esc_attr__('Gift aid field', 'txtdomain');
+        return esc_attr__('Gift aid field', 'itineris-gf-giftaid-field');
     }
 
     public function get_form_editor_button(): array

@@ -6,8 +6,7 @@
     "gravity forms",
     "gift",
     "aid",
-    "wordpress",
-    "wp"
+    "giftaid"
   ],
   "homepage": "https://itinerisltd.github.io/gf-giftaid-field/",
   "license": "MIT",
@@ -19,9 +18,8 @@
       "role": "Company"
     },
     {
-      "name": "Lee Hanbury-Pickett",
-      "email": "lee.hanbury@gmail.com",
-      "homepage": "https://github.com/codepuncher",
+      "name": "Igor Tkachenko",
+      "email": "igor.tkachenko@itineris.co.uk",
       "role": "Developer"
     }
   ],
@@ -34,7 +32,8 @@
     }
   },
   "require-dev": {
-    "roave/security-advisories": "dev-master"
+    "roave/security-advisories": "dev-master",
+    "itinerisltd/itineris-wp-coding-standards": "dev-2023-02-01"
   },
   "extra": {
     "branch-alias": {
@@ -44,7 +43,12 @@
   "prefer-stable": true,
   "support": {
     "email": "hello@itineris.co.uk",
-    "issues": "https://github.com/ItinerisLtd/media-upload-restrictions/issues",
-    "source": "https://github.com/ItinerisLtd/media-upload-restrictions"
+    "issues": "https://github.com/ItinerisLtd/gf-giftaid-field/issues",
+    "source": "https://github.com/ItinerisLtd/gf-giftaid-field"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }
