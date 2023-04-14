@@ -52,7 +52,7 @@ class GiftAidField extends GF_Field {
                 <img src="<?php echo esc_url($giftaidImage); ?>" alt="GiftAid logo">
             </div>
             <div class="description text-primary font-medium text-20px mb-2">
-                <p><?php echo esc_html($this->get_calculated_gift()); ?></p>
+                <p><?php echo $this->get_calculated_gift(); ?></p>
             </div>
             <div class="gift-box-form-wrapper">
                 <div class="ginput_container ginput_container_checkbox mb-6">
