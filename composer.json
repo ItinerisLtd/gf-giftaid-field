@@ -1,0 +1,50 @@
+{
+  "name": "itinerisltd/gf-giftaid-field",
+  "type": "wordpress-muplugin",
+  "description": "Gravity Forms Gift Aid field",
+  "keywords": [
+    "gravity forms",
+    "gift",
+    "aid",
+    "wordpress",
+    "wp"
+  ],
+  "homepage": "https://itinerisltd.github.io/gf-giftaid-field/",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Itineris Limited",
+      "email": "hello@itineris.co.uk",
+      "homepage": "https://itineris.co.uk/",
+      "role": "Company"
+    },
+    {
+      "name": "Lee Hanbury-Pickett",
+      "email": "lee.hanbury@gmail.com",
+      "homepage": "https://github.com/codepuncher",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7.4 || ^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Itineris\\GfGiftaidField\\": "src/"
+    }
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1.x-dev"
+    }
+  },
+  "prefer-stable": true,
+  "support": {
+    "email": "hello@itineris.co.uk",
+    "issues": "https://github.com/ItinerisLtd/media-upload-restrictions/issues",
+    "source": "https://github.com/ItinerisLtd/media-upload-restrictions"
+  }
+}
