@@ -31,6 +31,10 @@
       "Itineris\\GfGiftaidField\\": "src/"
     }
   },
+  "scripts": {
+    "style:check": "phpcs",
+    "style:fix": "phpcbf"
+  },
   "require-dev": {
     "roave/security-advisories": "dev-master",
     "itinerisltd/itineris-wp-coding-standards": "dev-2023-02-01"
