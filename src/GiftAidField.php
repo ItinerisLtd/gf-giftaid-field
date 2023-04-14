@@ -63,8 +63,8 @@ class GiftAidField extends GF_Field
             </div>
             <div class="gift-box-form-wrapper">
                 <div class="ginput_container ginput_container_checkbox mb-6">
-                    <div class="gfield_checkbox" id="input_<?php echo sanitize_html_class($id); ?>">
-                        <div class="gchoice gchoice_<?php echo esc_html($id); ?>">
+                    <div class="gfield_checkbox" id="input_<?php echo esc_attr($id); ?>">
+                        <div class="gchoice gchoice_<?php echo esc_attr($id); ?>">
                             <input
                                 class="gfield-choice-input"
                                 id="gift-check-<?php echo esc_attr($id); ?>"
