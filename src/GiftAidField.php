@@ -40,7 +40,7 @@ class GiftAidField extends GF_Field {
         return true;
     }
 
-    public function get_field_input($form, $value = '', $entry = null)
+    public function get_field_input($form, $value = '', $entry = null): string
     {
         $id = (int) $this->id;
         $giftaidImage = GIFT_AID_URI . '/assets/giftaid.svg';
@@ -76,7 +76,8 @@ class GiftAidField extends GF_Field {
         return ob_get_clean();
     }
 
-    public function get_field_content( $value, $force_frontend_label, $form ) {
+    public function get_field_content($value, $force_frontend_label, $form): string
+    {
         $form_id         = $form['id'];
         $admin_buttons   = $this->get_admin_buttons();
         $is_entry_detail = $this->is_entry_detail();
