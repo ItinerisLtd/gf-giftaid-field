@@ -40,7 +40,12 @@ class GiftAidField extends GF_Field
         return true;
     }
 
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
+    /**
+     * @param array        $form
+     * @param string|array $value
+     * @param null|array   $entry
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
     public function get_field_input($form, $value = '', $entry = null): string
     {
         $id = (int) $this->id;
@@ -54,20 +59,20 @@ class GiftAidField extends GF_Field
             </div>
             <div class="description text-primary font-medium text-20px mb-2">
                 <?php //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                <p><?php echo wpautop(wp_kses_post($this->get_calculated_gift())); ?></p>
+                <?php echo wpautop(wp_kses_post($this->get_calculated_gift())); ?>
             </div>
             <div class="gift-box-form-wrapper">
                 <div class="ginput_container ginput_container_checkbox mb-6">
-                    <div class="gfield_checkbox" id="input_<?php echo esc_html($id); ?>">
+                    <div class="gfield_checkbox" id="input_<?php echo sanitize_html_class($id); ?>">
                         <div class="gchoice gchoice_<?php echo esc_html($id); ?>">
                             <input
                                 class="gfield-choice-input"
-                                id="gift-check-<?php echo esc_html($id); ?>"
-                                name="gift-check-<?php echo esc_html($id); ?>"
+                                id="gift-check-<?php echo esc_attr($id); ?>"
+                                name="gift-check-<?php echo esc_attr($id); ?>"
                                 type="checkbox"
                                 value="1"
                             >
-                            <label for="gift-check-<?php echo esc_html($id); ?>">
+                            <label for="gift-check-<?php echo esc_attr($id); ?>">
                                 <?php echo esc_html($this->label); ?>
                             </label>
                         </div>
@@ -80,7 +85,12 @@ class GiftAidField extends GF_Field
         return ob_get_clean();
     }
 
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
+    /**
+     * @param string|array $value
+     * @param bool         $force_frontend_label
+     * @param array        $form
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
     public function get_field_content($value, $force_frontend_label, $form): string
     {
         $form_id         = $form['id'];
@@ -89,16 +99,18 @@ class GiftAidField extends GF_Field
         $is_form_editor  = $this->is_form_editor();
         $is_admin        = $is_entry_detail || $is_form_editor;
         $field_label     = $this->get_field_label($force_frontend_label, $value);
-        $field_id        = $is_admin || 0 === $form_id ? "input_{$this->id}" : 'input_' . $form_id . "_{$this->id}";
+        $field_id        = ($is_admin || 0 === $form_id) ? "input_{$this->id}" : "input_{$form_id}_{$this->id}";
 
-        return ! $is_admin
-            ? '{FIELD}'
-            : sprintf(
+        if ($is_admin) {
+            return sprintf(
                 "%s<label class='gfield_label gform-field-label' for='%s'>%s</label>{FIELD}",
                 $admin_buttons,
                 $field_id,
                 esc_html($field_label),
             );
+        }
+
+        return '{FIELD}';
     }
 
     public function get_calculated_gift(): string
