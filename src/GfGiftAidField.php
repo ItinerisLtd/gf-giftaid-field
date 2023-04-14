@@ -13,14 +13,14 @@ class GfGiftAidField
     {
         static::hooks();
 
-        GF_Fields::register('GiftAidField');
+        GF_Fields::register(new GiftAidField());
     }
 
     public static function hooks()
     {
         add_action('wp_enqueue_scripts', [static::class, 'enqueueGiftAidScripts']);
         add_action('gform_enqueue_scripts', function (): void {
-            wp_enqueue_script('gf-gift-aid');
+            wp_enqueue_script('gf-gift-aid-field');
         });
     }
 
@@ -28,7 +28,7 @@ class GfGiftAidField
     {
         wp_register_script(
             'gf-gift-aid-field',
-            plugin_dir_url() . '/public/js/gift-aid.js',
+            GIFT_AID_URI . '/public/js/gift-aid.js',
             [],
             null,
             true,
