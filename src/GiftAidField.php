@@ -57,7 +57,7 @@ class GiftAidField extends GF_Field
             <div class="gift-aid-logo mb-2">
                 <img src="<?php echo esc_url($giftaidImage); ?>" alt="GiftAid logo">
             </div>
-            <div class="description text-primary font-medium text-20px mb-2">
+            <div class="description text-primary font-medium text-xl mb-2">
                 <?php //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                 <?php echo wpautop(wp_kses_post($this->get_calculated_gift())); ?>
             </div>
