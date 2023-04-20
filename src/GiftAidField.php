@@ -115,8 +115,8 @@ class GiftAidField extends GF_Field
 
     public function get_calculated_gift(): string
     {
-        $calculationText = 'With Gift Aid, your donation of {{ donation }} would be worth {{ calculated_gift_aid }}
-        at no extra cost to you.';
+        // phpcs:ignore Generic.Files.LineLength.TooLong
+        $calculationText = 'With Gift Aid, your donation of {{ donation }} would be worth {{ calculated_gift_aid }} at no extra cost to you.';
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $donation = (isset($_GET['amount']) ? sanitize_text_field(wp_unslash($_GET['amount'])) : 0);
         $amount = ($donation * 25) / 100;
@@ -124,8 +124,8 @@ class GiftAidField extends GF_Field
         $displayNum = number_format((float) $totalAmt, 2, '.', '');
         $searchReplace = [
             '{{ donation }}' => "<span class=\"gform_donation_total\">£{$donation}</span>",
-            '{{ calculated_gift_aid }}' => "<strong>£<span class=\"gform_donation_gifttotal\">{$displayNum}
-</span></strong>",
+            // phpcs:ignore Generic.Files.LineLength.TooLong
+            '{{ calculated_gift_aid }}' => "<strong>£<span class=\"gform_donation_gifttotal\">{$displayNum}</span></strong>",
         ];
 
         return str_replace(
