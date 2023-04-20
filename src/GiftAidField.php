@@ -49,7 +49,7 @@ class GiftAidField extends GF_Field
     public function get_field_input($form, $value = '', $entry = null): string
     {
         $id = (int) $this->id;
-        $giftaidImage = ITINERIS_GF_GIFT_AID_FIELD_URI . '/assets/giftaid.svg';
+        $giftaidImage = ITINERIS_GF_GIFT_AID_FIELD_URI . '/public/img/giftaid.svg';
 
         ob_start();
         ?>
