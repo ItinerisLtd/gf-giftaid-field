@@ -13,3 +13,4 @@
 /config         -export-ignore
 /src            -export-ignore
 /vendor         -export-ignore
+/public         -export-ignore
