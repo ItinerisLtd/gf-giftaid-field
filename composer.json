@@ -1,0 +1,58 @@
+{
+  "name": "itinerisltd/gf-giftaid-field",
+  "type": "wordpress-muplugin",
+  "description": "Gravity Forms Gift Aid field",
+  "keywords": [
+    "gravity forms",
+    "gift",
+    "aid",
+    "giftaid"
+  ],
+  "homepage": "https://itinerisltd.github.io/gf-giftaid-field/",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Itineris Limited",
+      "email": "hello@itineris.co.uk",
+      "homepage": "https://itineris.co.uk/",
+      "role": "Company"
+    },
+    {
+      "name": "Igor Tkachenko",
+      "email": "igor.tkachenko@itineris.co.uk",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Itineris\\GfGiftaidField\\": "src/"
+    }
+  },
+  "scripts": {
+    "style:check": "phpcs",
+    "style:fix": "phpcbf"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master",
+    "itinerisltd/itineris-wp-coding-standards": "^1.0"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1.x-dev"
+    }
+  },
+  "prefer-stable": true,
+  "support": {
+    "email": "hello@itineris.co.uk",
+    "issues": "https://github.com/ItinerisLtd/gf-giftaid-field/issues",
+    "source": "https://github.com/ItinerisLtd/gf-giftaid-field"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}
