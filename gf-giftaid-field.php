@@ -28,4 +28,8 @@ if (! defined('ITINERIS_GF_GIFT_AID_FIELD_URI')) {
     define('ITINERIS_GF_GIFT_AID_FIELD_URI', WPMU_PLUGIN_URL . '/' . basename(__DIR__));
 }
 
+if (! defined('ITINERIS_GF_GIFT_AID_FIELD_DIR')) {
+    define('ITINERIS_GF_GIFT_AID_FIELD_DIR', plugin_dir_path( __FILE__ ));
+}
+
 add_action('gform_loaded', [GfGiftAidField::class, 'load'], 5);
