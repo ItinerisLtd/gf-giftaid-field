@@ -70,7 +70,7 @@ class GiftAidField extends GF_Field
                                 id="gift-check-<?php echo esc_attr($id); ?>"
                                 name="input_<?php echo esc_attr($id); ?>"
                                 type="checkbox"
-                                value="yes"
+                                value="Yes"
                             >
                             <label for="gift-check-<?php echo esc_attr($id); ?>">
                                 <?php echo esc_html($this->label); ?>
