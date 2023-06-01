@@ -68,9 +68,9 @@ class GiftAidField extends GF_Field
                             <input
                                 class="gfield-choice-input"
                                 id="gift-check-<?php echo esc_attr($id); ?>"
-                                name="gift-check-<?php echo esc_attr($id); ?>"
+                                name="input_<?php echo esc_attr($id); ?>"
                                 type="checkbox"
-                                value="1"
+                                value="true"
                             >
                             <label for="gift-check-<?php echo esc_attr($id); ?>">
                                 <?php echo esc_html($this->label); ?>
