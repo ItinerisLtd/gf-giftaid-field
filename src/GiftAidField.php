@@ -118,7 +118,7 @@ class GiftAidField extends GF_Field
         // phpcs:ignore Generic.Files.LineLength.TooLong
         $calculationText = 'With Gift Aid, your donation of {{ donation }} would be worth {{ calculated_gift_aid }} at no extra cost to you.';
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $donation = (isset($_GET['amount']) ? sanitize_text_field(wp_unslash($_GET['amount'])) : 0);
+        $donation = absint($_GET['amount'] ?? 0);
         $amount = ($donation * 25) / 100;
         $totalAmt = $donation + $amount;
         $displayNum = number_format((float) $totalAmt, 2, '.', '');
