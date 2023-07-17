@@ -1,6 +1,6 @@
 {
   "name": "itinerisltd/gf-giftaid-field",
-  "type": "wordpress-muplugin",
+  "type": "wordpress-plugin",
   "description": "Gravity Forms Gift Aid field",
   "keywords": [
     "gravity forms",
