@@ -25,7 +25,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 }
 
 if (! defined('ITINERIS_GF_GIFT_AID_FIELD_URI')) {
-    define('ITINERIS_GF_GIFT_AID_FIELD_URI', WPMU_PLUGIN_URL . '/' . basename(__DIR__));
+    define('ITINERIS_GF_GIFT_AID_FIELD_URI', plugins_url(basename(__DIR__)));
 }
 
 add_action('gform_loaded', [GfGiftAidField::class, 'load'], 5);
