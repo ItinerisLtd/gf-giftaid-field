@@ -74,13 +74,13 @@ class GiftAidField extends GF_Field
                                 value="Yes"
                             >
                             <label for="gift-check-<?php echo esc_attr($id); ?>">
-                                <?php echo esc_html($this->checkboxLabel); ?>
+                                <?php echo wp_kses_post($this->checkboxLabel); ?>
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="details-description"><?php echo esc_html($this->description); ?></div>
+            <div class="details-description"><?php echo wp_kses_post($this->description); ?></div>
         </div>
         <?php
         return ob_get_clean();
@@ -134,5 +134,11 @@ class GiftAidField extends GF_Field
             array_values($searchReplace),
             $calculationText,
         );
+    }
+
+    public function sanitize_settings(): void
+    {
+        parent::sanitize_settings();
+        $this->checkboxLabel = $this->maybe_wp_kses($this->checkboxLabel);
     }
 }
