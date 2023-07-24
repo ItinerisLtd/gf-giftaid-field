@@ -32,6 +32,7 @@ class GiftAidField extends GF_Field
             'error_message_setting',
             'css_class_setting',
             'conditional_logic_field_setting',
+            'checkbox_label_setting',
         ];
     }
 
@@ -73,7 +74,7 @@ class GiftAidField extends GF_Field
                                 value="Yes"
                             >
                             <label for="gift-check-<?php echo esc_attr($id); ?>">
-                                <?php echo esc_html($this->label); ?>
+                                <?php echo esc_html($this->checkboxLabel); ?>
                             </label>
                         </div>
                     </div>
