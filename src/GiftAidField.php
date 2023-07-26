@@ -26,7 +26,7 @@ class GiftAidField extends GF_Field
     public function get_form_editor_button(): array
     {
         return [
-            'group' => 'advanced_fields',
+            'group' => 'pricing_fields',
             'text'  => $this->get_form_editor_field_title(),
         ];
     }
