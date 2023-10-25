@@ -1,9 +1,18 @@
 function gfGiftAidOnInputChange(elem) {
-  if (
-    !(elem instanceof HTMLElement) ||
-    !elem.classList.contains('ginput_amount')
-  ) {
+  if (!(elem instanceof HTMLElement)) {
     return;
+  }
+
+  const wrapperField = elem.closest('.gfield');
+  if (!(wrapperField instanceof HTMLElement)) {
+    return;
+  } else {
+    if (
+      !wrapperField.classList.contains('giftaid-value') &&
+      !elem.classList.contains('ginput_amount')
+    ) {
+      return;
+    }
   }
 
   const parentForm = elem.closest('form');
