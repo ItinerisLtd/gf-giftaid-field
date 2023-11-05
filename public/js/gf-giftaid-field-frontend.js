@@ -3,21 +3,18 @@ function gfGiftAidOnInputChange(elem) {
     return;
   }
 
-  const wrapperField = elem.closest('.gfield');
-  if (!(wrapperField instanceof HTMLElement)) {
+  if (! elem.classList.contains('ginput_total') && ! elem.classList.contains('ginput_amount')) {
     return;
-  } else {
-    if (
-      !wrapperField.classList.contains('giftaid-value') &&
-      !elem.classList.contains('ginput_amount')
-    ) {
-      return;
-    }
   }
 
   const parentForm = elem.closest('form');
   if (!(parentForm instanceof HTMLFormElement)) {
     return;
+  }
+
+  const totalEl = parentForm.querySelector('.ginput_total');
+  if (totalEl instanceof HTMLElement) {
+    elem = totalEl;
   }
 
   const spanTotal = parentForm.querySelectorAll('.gform_donation_total');
