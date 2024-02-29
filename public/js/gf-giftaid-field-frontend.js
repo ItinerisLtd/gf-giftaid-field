@@ -1,15 +1,19 @@
-document.addEventListener('DOMContentLoaded', () => {
-  updateGiftAidTotal();
-});
+/**
+ * The donation total object.
+ * @typedef {Object} Donation
+ * @property {string} donation - The amount donated as a string.
+ * @property {string} giftAidTotal - The amount including taxback as a string.
+ */
 
-function updateGiftAidTotal() {
-  console.log( window.gform);
+document.addEventListener('DOMContentLoaded', () => {
   window.gform.addAction('gform_input_change', updateGFFromTotal, 10);
-}
+});
 
 function updateGFFromTotal(elem) {
   const total = getTotalAmount(elem);
-  if (! total) return;
+  if (! total || !total.donation || !total.giftAidTotal) {
+    return;
+  }
 
   updateGiftAidDisplay(total);
 }
@@ -17,7 +21,7 @@ function updateGFFromTotal(elem) {
 /**
  * Gets the total amount donated and updates the Gift Aid total.
  * @param {HTMLElement} elem
- * @returns {string} The total amount donated.
+ * @returns {Donation} The total amount donated.
  */
 function getTotalAmount(elem) {
   if (! (elem instanceof HTMLInputElement) || ! elem.classList.contains('ginput_total')) {
@@ -28,18 +32,23 @@ function getTotalAmount(elem) {
   if (! totalValueFloat) {
     return '';
   }
-  const roundedTwoDP = totalValueFloat.toFixed(2);
-  if (! roundedTwoDP) {
-    return '';
-  }
-  return roundedTwoDP;
+  const giftAidAmount = totalValueFloat * 1.25;
+
+  return {
+    donation: totalValueFloat.toFixed(2),
+    giftAidTotal: giftAidAmount.toFixed(2)
+  };
 }
 
 /**
- * updates the gift aid display.
- * @param {string} total
+ * Updates the gift aid display.
+ * @param {Donation} total
+ * @returns {void}
  */
 function updateGiftAidDisplay(total) {
+  if (!total || !total.donation || !total.giftAidTotal) {
+    return;
+  }
   const gravityForm = document.querySelector('.gform_wrapper');
   if (! (gravityForm instanceof HTMLElement)) {
     return;
@@ -52,8 +61,6 @@ function updateGiftAidDisplay(total) {
   if (! (spanTotalGift instanceof HTMLSpanElement)) {
     return;
   }
-  spanTotal.innerHTML = total;
-
-  const totalGift = parseFloat(total * 1.25).toFixed(2);
-  spanTotalGift.innerHTML = totalGift;
+  spanTotal.innerHTML = total.donation;
+  spanTotalGift.innerHTML = total.giftAidTotal;
 }
