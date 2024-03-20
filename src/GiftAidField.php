@@ -69,7 +69,7 @@ class GiftAidField extends GF_Field
         $donationTotalSelect = $this->donationTotalSelect ?? 'query_parameter';
 
         ob_start();
-?>
+        ?>
         <div class="gift-box-wrapper bg-gray-50 rounded-br-4 p-7.5">
             <input title="Donation Total Select Value" class="donation-total-select" type="text" value="<?php echo esc_attr($donationTotalSelect); ?>" disabled hidden>
 
@@ -97,7 +97,7 @@ class GiftAidField extends GF_Field
 
             <div class="details-description"><?php echo wp_kses_post($this->description); ?></div>
         </div>
-<?php
+        <?php
 
         return ob_get_clean();
     }

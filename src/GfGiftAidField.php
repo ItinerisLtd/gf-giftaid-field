@@ -28,7 +28,7 @@ class GfGiftAidField
      * Custom field to enable the user to choose where they would like to pull the total value from.
      * Add 'donation_total_select' to the array of strings in the get_form_editor_field_settings method of your GF_Field Class to use.
      */
-    public static function add_donation_total_select_setting($position, $form_id)
+    public static function add_donation_total_select_setting($position, $form_id): void
     {
         if ($position !== 25 || empty($form_id)) {
             return;
@@ -37,21 +37,25 @@ class GfGiftAidField
         if (empty($field_options)) {
             return;
         }
-?>
+        ?>
         <li class="donation_total_select field_setting">
             <label for="donation_total_select_value" class="section_label">
-                <?php esc_html_e("Donation Total Select", "itineris-gf-giftaid-field"); ?>
+                <?php esc_html_e('Donation Total Select', 'itineris-gf-giftaid-field'); ?>
             </label>
 
             <select name="donation_total" id="donation_total_select_value" onchange="SetFieldProperty('donationTotalSelect', this.value);">
                 <?php foreach ($field_options as $field_id => $field_label) : ?>
-                    <?php if (empty($field_id) || empty($field_label)) continue; ?>
+                    <?php
+                    if (empty($field_id) || empty($field_label)) {
+                        continue;
+                    }
+                    ?>
 
                     <option value="<?php echo esc_attr($field_id); ?>"><?php echo esc_html($field_label); ?></option>
                 <?php endforeach; ?>
             </select>
         </li>
-<?php
+        <?php
     }
 
     /**
