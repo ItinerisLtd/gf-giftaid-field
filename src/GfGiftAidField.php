@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Itineris\GfGiftaidField;
 
 use GFAddOn;
+use GFAPI;
 use GFForms;
 
 class GfGiftAidField
@@ -32,6 +33,28 @@ class GfGiftAidField
         if ($position !== 25) {
             return;
         }
+        $exists = GFAPI::form_id_exists($form_id);
+        if (empty($exists)) {
+            return;
+        }
+
+        $form = GFAPI::get_form($form_id);
+        $fields = $form['fields'] ?? [];
+        if (empty($fields) || !is_array($fields)) {
+            return;
+        }
+
+        $field_options = array_reduce($fields, function ($carry, $field) {
+            if (empty($field) || empty($field->id) || empty($field->label)) {
+                return $carry;
+            }
+            $carry[$field->id] = $field->label;
+            return $carry;
+        }, []);
+        if (empty($field_options)) {
+            return;
+        }
+
 ?>
         <li class="donation_total_select field_setting">
 
@@ -40,8 +63,11 @@ class GfGiftAidField
             </label>
 
             <select name="donation_total" id="donation_total_select_value" onchange="SetFieldProperty('donationTotalSelect', this.value);">
-                <option value="query_parameter"><?php esc_html_e("Query Parameter", "itineris-gf-giftaid-field"); ?></option>
-                <option value="ginput_total"><?php esc_html_e("ginput_total Input", "itineris-gf-giftaid-field"); ?></option>
+                <?php foreach ($field_options as $field_id => $field_label) : ?>
+                    <?php if (empty($field_id) || empty($field_label)) continue; ?>
+
+                    <option value="<?php echo esc_attr($field_id); ?>"><?php echo esc_html($field_label); ?></option>
+                <?php endforeach; ?>
             </select>
         </li>
 <?php
