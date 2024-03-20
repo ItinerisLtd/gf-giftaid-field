@@ -37,10 +37,9 @@ class GfGiftAidField
 
             <label for="donation_total_select_value" class="section_label">
                 <?php esc_html_e("Donation Total Select", "itineris-gf-giftaid-field"); ?>
-                <?php gform_tooltip("form_field_donation_total_select_value") ?>
             </label>
 
-            <select name="donation_total" id="donation_total_select_value" onchange="console.log(this.value)">
+            <select name="donation_total" id="donation_total_select_value" onchange="SetFieldProperty('donationTotalSelect', this.value);">
                 <option value="query_parameter"><?php esc_html_e("Query Parameter", "itineris-gf-giftaid-field"); ?></option>
                 <option value="ginput_total"><?php esc_html_e("ginput_total Input", "itineris-gf-giftaid-field"); ?></option>
             </select>
