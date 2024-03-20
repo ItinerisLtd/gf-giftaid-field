@@ -19,6 +19,8 @@ class GfGiftAidField
 
         GFForms::include_addon_framework();
         GFAddOn::register(AddOn::class);
+
+        add_action('gform_field_standard_settings', [static::class, 'add_donation_total_select_setting'], 10, 2);
     }
 
     /**
@@ -33,17 +35,15 @@ class GfGiftAidField
 ?>
         <li class="donation_total_select field_setting">
 
-            <label for="donation_total_select_value" style="display:inline;">
-                <?php _e("Donation Total Select", "itineris-gf-giftaid-field"); ?>
+            <label for="donation_total_select_value" class="section_label">
+                <?php esc_html_e("Donation Total Select", "itineris-gf-giftaid-field"); ?>
                 <?php gform_tooltip("form_field_donation_total_select_value") ?>
             </label>
 
-            <select name="donation_total" id="donation_total_select_value">
-                <option value="query_parameter"><?php _e("Query Parameter", "itineris-gf-giftaid-field"); ?></option>
-                <option value="ginput_total"><?php _e("ginput_total Input", "itineris-gf-giftaid-field"); ?></option>
+            <select name="donation_total" id="donation_total_select_value" onchange="console.log(this.value)">
+                <option value="query_parameter"><?php esc_html_e("Query Parameter", "itineris-gf-giftaid-field"); ?></option>
+                <option value="ginput_total"><?php esc_html_e("ginput_total Input", "itineris-gf-giftaid-field"); ?></option>
             </select>
-            <!-- <input type="checkbox" id="field_encrypt_value" onclick="SetFieldProperty('encryptField', this.checked);" /> -->
-
         </li>
 <?php
     }
