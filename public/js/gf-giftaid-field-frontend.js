@@ -6,8 +6,23 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  window.gform.addAction('gform_input_change', updateGFFromTotal, 10);
+  determineDonationTotalMethod();
 });
+
+function determineDonationTotalMethod() {
+  const giftAidComponent = document.querySelector('.gift-box-wrapper');
+  if (! (giftAidComponent instanceof HTMLElement)) {
+    return;
+  }
+  const donationTotalInput = giftAidComponent.querySelector('input.donation-total-select');
+  if (!(donationTotalInput instanceof HTMLInputElement)) {
+    return;
+  }
+  const donationTotalSelection = donationTotalInput.value;
+  if ("ginput_total" === donationTotalSelection) {
+    window.gform.addAction('gform_input_change', updateGFFromTotal, 10);
+  }
+}
 
 function updateGFFromTotal(elem) {
   const total = getTotalAmount(elem);

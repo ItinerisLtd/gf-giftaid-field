@@ -66,18 +66,22 @@ class GiftAidField extends GF_Field
     {
         $id = (int) $this->id;
         $giftaidImage = plugins_url('public/img/giftaid.svg', __DIR__);
+        $donationTotalSelect = $this->donationTotalSelect ?? 'query_parameter';
 
         ob_start();
 ?>
         <div class="gift-box-wrapper bg-gray-50 rounded-br-4 p-7.5">
+            <input title="Donation Total Select Value" class="donation-total-select" type="text" value="<?php echo esc_attr($donationTotalSelect); ?>" disabled hidden>
+
             <div class="giftaid-logo mb-2">
                 <img src="<?php echo esc_url($giftaidImage); ?>" alt="GiftAid logo">
             </div>
+
             <div class="description text-primary font-medium text-xl mb-2">
-                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                ?>
+                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                 <?php echo wpautop(wp_kses_post($this->get_calculated_gift())); ?>
             </div>
+
             <div class="gift-box-form-wrapper my-6 pb-6 border-b border-b-gray-200">
                 <div class="ginput_container ginput_container_checkbox mb-6">
                     <div class="gfield_checkbox" id="input_<?php echo esc_attr($id); ?>">
@@ -90,6 +94,7 @@ class GiftAidField extends GF_Field
                     </div>
                 </div>
             </div>
+
             <div class="details-description"><?php echo wp_kses_post($this->description); ?></div>
         </div>
 <?php
