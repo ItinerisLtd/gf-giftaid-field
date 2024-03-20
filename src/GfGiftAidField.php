@@ -21,16 +21,16 @@ class GfGiftAidField
         GFForms::include_addon_framework();
         GFAddOn::register(AddOn::class);
 
-        add_action('gform_field_standard_settings', [static::class, 'add_donation_total_select_setting'], 10, 2);
+        add_action('gform_field_standard_settings', [static::class, 'addDonationTotalSelectSetting'], 10, 2);
     }
 
     /**
      * Custom field to enable the user to choose where they would like to pull the total value from.
-     * Add 'donation_total_select' to the array of strings in the get_form_editor_field_settings method of your GF_Field Class to use.
+     * Add 'donation_total_select' to the array of strings in the get_form_editor_field_settings method of your field.
      */
-    public static function add_donation_total_select_setting($position, $form_id): void
+    public static function addDonationTotalSelectSetting(int $position, int $form_id): void
     {
-        if ($position !== 25 || empty($form_id)) {
+        if (25 !== $position || empty($form_id)) {
             return;
         }
         $field_options = static::getFormFields($form_id);

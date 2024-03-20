@@ -8,7 +8,9 @@ use GF_Field;
 
 class GiftAidField extends GF_Field
 {
-    // ! If you change $type var below it will break all instances of this field on every website.
+    /**
+     * ! If you change $type var below it will break all instances of this field on every website.
+     */
     public string $type = 'gift_aid';
 
     public function get_form_editor_field_title(): string
@@ -72,7 +74,14 @@ class GiftAidField extends GF_Field
         ob_start();
         ?>
         <div class="gift-box-wrapper bg-gray-50 rounded-br-4 p-7.5">
-            <input title="Donation Total Select Value" class="donation-total-select" type="text" value="<?php echo esc_attr($totalFieldClass); ?>" disabled hidden>
+            <input
+                title="Donation Total Select Value"
+                class="donation-total-select"
+                type="text"
+                value="<?php echo esc_attr($totalFieldClass); ?>"
+                disabled
+                hidden
+            >
 
             <div class="giftaid-logo mb-2">
                 <img src="<?php echo esc_url($giftaidImage); ?>" alt="GiftAid logo">
@@ -87,7 +96,13 @@ class GiftAidField extends GF_Field
                 <div class="ginput_container ginput_container_checkbox mb-6">
                     <div class="gfield_checkbox" id="input_<?php echo esc_attr($id); ?>">
                         <div class="gchoice gchoice_<?php echo esc_attr($id); ?>">
-                            <input class="gfield-choice-input" id="gift-check-<?php echo esc_attr($id); ?>" name="input_<?php echo esc_attr($id); ?>" type="checkbox" value="Yes">
+                            <input
+                                class="gfield-choice-input"
+                                id="gift-check-<?php echo esc_attr($id); ?>"
+                                name="input_<?php echo esc_attr($id); ?>"
+                                type="checkbox"
+                                value="Yes"
+                            >
                             <label for="gift-check-<?php echo esc_attr($id); ?>">
                                 <?php echo wp_kses_post($this->checkboxLabel); ?>
                             </label>
