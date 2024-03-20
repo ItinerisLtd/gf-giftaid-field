@@ -56,7 +56,7 @@ class GfGiftAidField
 
     /**
      * Get all the fields in a gravity form in the format:
-     * ['field_id' => 'field_label', ...]
+     * ['field class' => 'field_label', ...]
      */
     public static function getFormFields(mixed $form_id): array
     {
@@ -71,11 +71,12 @@ class GfGiftAidField
             return [];
         }
 
-        $field_options = array_reduce($fields, function ($carry, $field) {
+        $field_options = array_reduce($fields, function ($carry, $field) use ($form_id) {
             if (empty($field) || empty($field->id) || empty($field->label)) {
                 return $carry;
             }
-            $carry[$field->id] = $field->label;
+            $class = "field_{$form_id}_{$field->id}";
+            $carry[$class] = $field->label;
             return $carry;
         }, []);
         if (empty($field_options)) {
