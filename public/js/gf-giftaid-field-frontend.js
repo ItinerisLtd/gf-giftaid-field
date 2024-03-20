@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
  * Updates the gift aid display, based on a chosen field changing.
  */
 function initGiftAid() {
-  const totalSelector = totalFieldSelector() || '.gfield.gfield--input-type-total';
+  const totalSelector = totalFieldSelector() || '.ginput_amount';
   window.gform.addAction('gform_input_change', (elem) => {
     const total = getTotalAmount(elem, totalSelector);
     if (! total || !total.donation || !total.giftAidTotal) {

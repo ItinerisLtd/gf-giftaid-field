@@ -43,7 +43,11 @@ class GfGiftAidField
                 <?php esc_html_e('Donation Total Select', 'itineris-gf-giftaid-field'); ?>
             </label>
 
-            <select name="donation_total" id="donation_total_select_value" onchange="SetFieldProperty('donationTotalSelect', this.value);">
+            <select
+                name="donation_total"
+                id="donation_total_select_value"
+                onchange="SetFieldProperty('donationTotalSelect', this.value);"
+            >
                 <?php foreach ($field_options as $field_id => $field_label) : ?>
                     <?php
                     if (empty($field_id) || empty($field_label)) {
