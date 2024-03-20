@@ -66,12 +66,12 @@ class GiftAidField extends GF_Field
     {
         $id = (int) $this->id;
         $giftaidImage = plugins_url('public/img/giftaid.svg', __DIR__);
-        $donationTotalSelect = $this->donationTotalSelect ?? 'query_parameter';
+        $totalFieldClass = $this->donationTotalSelect ?? 'query_parameter';
 
         ob_start();
         ?>
         <div class="gift-box-wrapper bg-gray-50 rounded-br-4 p-7.5">
-            <input title="Donation Total Select Value" class="donation-total-select" type="text" value="<?php echo esc_attr($donationTotalSelect); ?>" disabled hidden>
+            <input title="Donation Total Select Value" class="donation-total-select" type="text" value="<?php echo esc_attr($totalFieldClass); ?>" disabled hidden>
 
             <div class="giftaid-logo mb-2">
                 <img src="<?php echo esc_url($giftaidImage); ?>" alt="GiftAid logo">
