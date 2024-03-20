@@ -30,34 +30,15 @@ class GfGiftAidField
      */
     public static function add_donation_total_select_setting($position, $form_id)
     {
-        if ($position !== 25) {
+        if ($position !== 25 || empty($form_id)) {
             return;
         }
-        $exists = GFAPI::form_id_exists($form_id);
-        if (empty($exists)) {
-            return;
-        }
-
-        $form = GFAPI::get_form($form_id);
-        $fields = $form['fields'] ?? [];
-        if (empty($fields) || !is_array($fields)) {
-            return;
-        }
-
-        $field_options = array_reduce($fields, function ($carry, $field) {
-            if (empty($field) || empty($field->id) || empty($field->label)) {
-                return $carry;
-            }
-            $carry[$field->id] = $field->label;
-            return $carry;
-        }, []);
+        $field_options = static::getFormFields($form_id);
         if (empty($field_options)) {
             return;
         }
-
 ?>
         <li class="donation_total_select field_setting">
-
             <label for="donation_total_select_value" class="section_label">
                 <?php esc_html_e("Donation Total Select", "itineris-gf-giftaid-field"); ?>
             </label>
@@ -71,5 +52,36 @@ class GfGiftAidField
             </select>
         </li>
 <?php
+    }
+
+    /**
+     * Get all the fields in a gravity form in the format:
+     * ['field_id' => 'field_label', ...]
+     */
+    public static function getFormFields(mixed $form_id): array
+    {
+        $exists = GFAPI::form_id_exists($form_id);
+        if (empty($exists)) {
+            return [];
+        }
+
+        $form = GFAPI::get_form($form_id);
+        $fields = $form['fields'] ?? [];
+        if (empty($fields) || !is_array($fields)) {
+            return [];
+        }
+
+        $field_options = array_reduce($fields, function ($carry, $field) {
+            if (empty($field) || empty($field->id) || empty($field->label)) {
+                return $carry;
+            }
+            $carry[$field->id] = $field->label;
+            return $carry;
+        }, []);
+        if (empty($field_options)) {
+            return [];
+        }
+
+        return $field_options;
     }
 }
