@@ -42,7 +42,7 @@ class GiftAidField extends GF_Field
     public function get_form_editor_field_settings(): array
     {
         return [
-            'donation_total_select',
+            'selected_price_field_setting',
             'label_setting',
             'description_setting',
             'rules_setting',
@@ -69,19 +69,14 @@ class GiftAidField extends GF_Field
     {
         $id = (int) $this->id;
         $giftaidImage = plugins_url('public/img/giftaid.svg', __DIR__);
-        $totalFieldClass = $this->donationTotalSelect ?? '.ginput_amount';
+        $selectedPriceField = $this->selectedPriceField ?? '.ginput_amount';
 
         ob_start();
         ?>
-        <div class="gift-box-wrapper bg-gray-50 rounded-br-4 p-7.5">
-            <input
-                title="Donation Total Select Value"
-                class="donation-total-select"
-                type="text"
-                value="<?php echo esc_attr($totalFieldClass); ?>"
-                disabled
-                hidden
-            >
+        <div
+            class="gift-box-wrapper bg-gray-50 rounded-br-4 p-7.5"
+            data-selected-price-field-class="<?php echo esc_attr($selectedPriceField); ?>"
+        >
 
             <div class="giftaid-logo mb-2">
                 <img src="<?php echo esc_url($giftaidImage); ?>" alt="GiftAid logo">

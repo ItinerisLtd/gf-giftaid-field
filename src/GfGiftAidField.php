@@ -21,14 +21,14 @@ class GfGiftAidField
         GFForms::include_addon_framework();
         GFAddOn::register(AddOn::class);
 
-        add_action('gform_field_standard_settings', [static::class, 'addDonationTotalSelectSetting'], 10, 2);
+        add_action('gform_field_standard_settings', [static::class, 'addSelectedPriceFieldSetting'], 10, 2);
     }
 
     /**
      * Custom field to enable the user to choose where they would like to pull the total value from.
      * Add 'donation_total_select' to the array of strings in the get_form_editor_field_settings method of your field.
      */
-    public static function addDonationTotalSelectSetting(int $position, int $form_id): void
+    public static function addSelectedPriceFieldSetting(int $position, int $form_id): void
     {
         if (25 !== $position || empty($form_id)) {
             return;
@@ -38,15 +38,15 @@ class GfGiftAidField
             return;
         }
         ?>
-        <li class="donation_total_select field_setting">
-            <label for="donation_total_select_value" class="section_label">
-                <?php esc_html_e('Donation Total Select', 'itineris-gf-giftaid-field'); ?>
+        <li class="selected_price_field_setting field_setting">
+            <label for="selected_price_field_dropdown" class="section_label">
+                <?php esc_html_e('Price Field', 'itineris-gf-giftaid-field'); ?>
             </label>
 
             <select
                 name="donation_total"
-                id="donation_total_select_value"
-                onchange="SetFieldProperty('donationTotalSelect', this.value);"
+                id="selected_price_field_dropdown"
+                onchange="SetFieldProperty('selectedPriceField', this.value);"
             >
                 <?php foreach ($field_options as $field_id => $field_label) : ?>
                     <?php
@@ -79,7 +79,7 @@ class GfGiftAidField
             return [];
         }
 
-        $field_options = array_reduce($fields, function ($carry, $field) use ($form_id) {
+        return array_reduce($fields, function ($carry, $field) use ($form_id) {
             if (empty($field) || empty($field->id) || empty($field->label)) {
                 return $carry;
             }
@@ -87,10 +87,5 @@ class GfGiftAidField
             $carry[$class] = $field->label;
             return $carry;
         }, []);
-        if (empty($field_options)) {
-            return [];
-        }
-
-        return $field_options;
     }
 }
