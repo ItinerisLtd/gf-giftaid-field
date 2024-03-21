@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
  * Updates the gift aid display, based on a chosen field changing.
  */
 function initGiftAid() {
-  const totalSelector = totalFieldSelector() || '.ginput_amount';
+  const totalSelector = totalFieldSelector('.ginput_amount');
   window.gform.addAction('gform_input_change', (elem) => {
     const total = getTotalAmount(elem, totalSelector);
     if (! total || !total.donation || !total.giftAidTotal) {
@@ -26,20 +26,21 @@ function initGiftAid() {
 /**
  * Gets the selector of the total field, selected in the gift aid field settings.
  * Will be in the format 'field_<form_id>_<field_id>' and will be an id so the selector will be prefixed by #.
+ * @param {string} fallback fallback selector if the field is not found.
  * @returns {string} The class of the total field.
  */
-function totalFieldSelector() {
+function totalFieldSelector(fallback) {
   const giftAidComponent = document.querySelector('.gift-box-wrapper');
   if (! (giftAidComponent instanceof HTMLElement)) {
-    return '';
+    return fallback;
   }
   const donationTotalInput = giftAidComponent.querySelector('input.donation-total-select');
   if (!(donationTotalInput instanceof HTMLInputElement)) {
-    return '';
+    return fallback;
   }
   const fieldId = donationTotalInput.value;
   if (!fieldId) {
-    return '';
+    return fallback;
   }
   return `#${fieldId}`;
 }
