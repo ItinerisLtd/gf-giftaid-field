@@ -34,15 +34,12 @@ function totalFieldSelector(fallback) {
   if (! (giftAidComponent instanceof HTMLElement)) {
     return fallback;
   }
-  const donationTotalInput = giftAidComponent.querySelector('input.donation-total-select');
-  if (!(donationTotalInput instanceof HTMLInputElement)) {
+  const selectedPriceFieldId = giftAidComponent.dataset.selectedPriceFieldId;
+  if (!selectedPriceFieldId) {
     return fallback;
   }
-  const fieldId = donationTotalInput.value;
-  if (!fieldId) {
-    return fallback;
-  }
-  return `#${fieldId}`;
+
+  return `#${selectedPriceFieldId}`;
 }
 
 /**
