@@ -8,9 +8,6 @@ use GF_Field;
 
 class GiftAidField extends GF_Field
 {
-    /**
-     * ! If you change $type var below it will break all instances of this field on every website.
-     */
     public string $type = 'gift_aid';
 
     public function get_form_editor_field_title(): string
