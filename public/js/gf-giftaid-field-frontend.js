@@ -26,6 +26,7 @@ function initGiftAid() {
 /**
  * Gets the selector of the total field, selected in the gift aid field settings.
  * Will be in the format 'field_<form_id>_<field_id>' and will be an id so the selector will be prefixed by #.
+ * @param {HTMLElement} gravityForm The form element.
  * @param {string} fallback fallback selector if the field is not found.
  * @returns {string} The class of the total field.
  */
@@ -66,6 +67,7 @@ function getTotalAmount(elem, totalSelector) {
 
 /**
  * Updates the gift aid display.
+ * @param {HTMLElement} gravityForm The form element.
  * @param {object} The donation and gift aid total.
  * @returns {void}
  */
@@ -73,11 +75,11 @@ function updateGiftAidDisplay(gravityform, total) {
   if (!total || !total.donation || !total.giftAidTotal) {
     return;
   }
-  const spanTotal = gravityForm.querySelector('.gform_donation_total');
+  const spanTotal = gravityform.querySelector('.gform_donation_total');
   if (! (spanTotal instanceof HTMLSpanElement)) {
     return;
   }
-  const spanTotalGift = gravityForm.querySelector('.gform_donation_gifttotal');
+  const spanTotalGift = gravityform.querySelector('.gform_donation_gifttotal');
   if (! (spanTotalGift instanceof HTMLSpanElement)) {
     return;
   }
