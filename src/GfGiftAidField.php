@@ -7,6 +7,7 @@ namespace Itineris\GfGiftaidField;
 use GFAddOn;
 use GFAPI;
 use GFForms;
+use GF_Field;
 
 class GfGiftAidField
 {
@@ -79,7 +80,7 @@ class GfGiftAidField
             return [];
         }
 
-        return array_reduce($fields, function (array $carry, mixed $field) use ($form_id): array {
+        return array_reduce($fields, function (array $carry, GF_Field $field) use ($form_id): array {
             if (empty($field) || empty($field->id) || empty($field->label)) {
                 return $carry;
             }
