@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Itineris\GfGiftaidField;
 
+use GF_Field;
 use GFAddOn;
 use GFAPI;
 use GFForms;
-use GF_Field;
 
 class GfGiftAidField
 {
