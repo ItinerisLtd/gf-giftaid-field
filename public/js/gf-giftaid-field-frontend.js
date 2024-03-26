@@ -6,13 +6,20 @@ document.addEventListener('DOMContentLoaded', () => {
  * Updates the gift aid display, based on a chosen field changing.
  */
 function initGiftAid() {
-  const totalSelector = totalFieldSelector('.ginput_amount');
+  const gravityForm = document.querySelector('.gform_wrapper');
+  if (! (gravityForm instanceof HTMLElement)) {
+    return;
+  }
+  const totalSelector = totalFieldSelector(gravityForm, '.ginput_amount');
+  if (!totalSelector) {
+    return;
+  }
   window.gform.addAction('gform_input_change', (elem) => {
     const total = getTotalAmount(elem, totalSelector);
     if (! total || !total.donation || !total.giftAidTotal) {
       return;
     }
-    updateGiftAidDisplay(total);
+    updateGiftAidDisplay(gravityForm, total);
   }, 10);
 }
 
@@ -22,8 +29,8 @@ function initGiftAid() {
  * @param {string} fallback fallback selector if the field is not found.
  * @returns {string} The class of the total field.
  */
-function totalFieldSelector(fallback) {
-  const giftAidComponent = document.querySelector('.gift-box-wrapper');
+function totalFieldSelector(gravityForm, fallback) {
+  const giftAidComponent = gravityForm.querySelector('.gift-box-wrapper');
   if (! (giftAidComponent instanceof HTMLElement)) {
     return fallback;
   }
@@ -31,7 +38,6 @@ function totalFieldSelector(fallback) {
   if (!selectedPriceFieldId) {
     return fallback;
   }
-
   return `#${selectedPriceFieldId}`;
 }
 
@@ -63,12 +69,8 @@ function getTotalAmount(elem, totalSelector) {
  * @param {object} The donation and gift aid total.
  * @returns {void}
  */
-function updateGiftAidDisplay(total) {
+function updateGiftAidDisplay(gravityform, total) {
   if (!total || !total.donation || !total.giftAidTotal) {
-    return;
-  }
-  const gravityForm = document.querySelector('.gform_wrapper');
-  if (! (gravityForm instanceof HTMLElement)) {
     return;
   }
   const spanTotal = gravityForm.querySelector('.gform_donation_total');
