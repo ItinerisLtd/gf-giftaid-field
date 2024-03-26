@@ -27,7 +27,6 @@ class GfGiftAidField
 
     /**
      * Custom field to enable the user to choose where they would like to pull the total value from.
-     * Add 'donation_total_select' to the array of strings in the get_form_editor_field_settings method of your field.
      */
     public static function addSelectedPriceFieldSetting(int $position, int $form_id): void
     {

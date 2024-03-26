@@ -1,10 +1,3 @@
-/**
- * The donation total object.
- * @typedef {Object} Donation
- * @property {string} donation - The amount donated as a string.
- * @property {string} giftAidTotal - The amount including taxback as a string.
- */
-
 document.addEventListener('DOMContentLoaded', () => {
   initGiftAid();
 });
@@ -46,7 +39,7 @@ function totalFieldSelector(fallback) {
  * Gets the total amount donated and updates the Gift Aid total.
  * @param {HTMLElement} elem The element that has changed.
  * @param {string} totalSelector selector of the chosen total field.
- * @returns {Donation} The total amount donated.
+ * @returns {object} The donation and gift aid total.
  */
 function getTotalAmount(elem, totalSelector) {
   if (! (elem instanceof HTMLInputElement) || ! elem.closest(totalSelector)) {
@@ -67,7 +60,7 @@ function getTotalAmount(elem, totalSelector) {
 
 /**
  * Updates the gift aid display.
- * @param {Donation} total
+ * @param {object} The donation and gift aid total.
  * @returns {void}
  */
 function updateGiftAidDisplay(total) {
