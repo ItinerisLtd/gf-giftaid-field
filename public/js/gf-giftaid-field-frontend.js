@@ -12,7 +12,7 @@ function initGiftAid() {
   if (!totalSelector) {
     return;
   }
-  window.gform.addAction('gform_input_change', (elem) => {
+  window.gform.addAction('gform_input_change', function (elem) {
       const value = elem.value;
       const valueFloat = parseFloat(value);
       const giftAidFloat = valueFloat * 1.25;
