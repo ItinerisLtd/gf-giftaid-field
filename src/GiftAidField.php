@@ -66,13 +66,15 @@ class GiftAidField extends GF_Field
     {
         $id = (int) $this->id;
         $giftaidImage = plugins_url('public/img/giftaid.svg', __DIR__);
-        $selectedPriceField = $this->selectedPriceField ?? '.ginput_amount';
+        $selectedPriceField = $this->selectedPriceField ?? '';
 
         ob_start();
         ?>
         <div
             class="gift-box-wrapper bg-gray-50 rounded-br-4 p-7.5"
-            data-selected-price-field-id="<?php echo esc_attr($selectedPriceField); ?>"
+            <?php if(!empty($selectedPriceField)): ?>
+                data-selected-price-field-id="<?php echo esc_attr($selectedPriceField); ?>"
+            <?php endif; ?>
         >
 
             <div class="giftaid-logo mb-2">
