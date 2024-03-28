@@ -1,13 +1,11 @@
-document.addEventListener('DOMContentLoaded', () => {
-  initGiftAid();
-});
+document.addEventListener('DOMContentLoaded', initGiftAid);
 
 /**
  * Updates the gift aid display, based on a chosen field changing.
  */
 function initGiftAid() {
   const gravityForm = document.querySelector('.gform_wrapper');
-  if (! (gravityForm instanceof HTMLElement)) {
+  if (!(gravityForm instanceof HTMLElement)) {
     return;
   }
   const totalSelector = totalFieldSelector(gravityForm, '.ginput_amount');
@@ -15,12 +13,16 @@ function initGiftAid() {
     return;
   }
   window.gform.addAction('gform_input_change', (elem) => {
-    const total = getTotalAmount(elem, totalSelector);
-    if (! total || !total.donation || !total.giftAidTotal) {
-      return;
-    }
-    updateGiftAidDisplay(gravityForm, total);
-  }, 10);
+      const value = elem.value;
+      const valueFloat = parseFloat(value);
+      const giftAidFloat = valueFloat * 1.25;
+      const donation = valueFloat.toFixed(2);
+      const giftAidAmount = giftAidFloat.toFixed(2);
+      if (!donation || !giftAidAmount) {
+        return;
+      }
+      updateGiftAidDisplay(gravityForm, donation, giftAidAmount);
+    }, 10);
 }
 
 /**
@@ -32,7 +34,7 @@ function initGiftAid() {
  */
 function totalFieldSelector(gravityForm, fallback) {
   const giftAidComponent = gravityForm.querySelector('.gift-box-wrapper');
-  if (! (giftAidComponent instanceof HTMLElement)) {
+  if (!(giftAidComponent instanceof HTMLElement)) {
     return fallback;
   }
   const selectedPriceFieldId = giftAidComponent.dataset.selectedPriceFieldId;
@@ -43,46 +45,23 @@ function totalFieldSelector(gravityForm, fallback) {
 }
 
 /**
- * Gets the total amount donated and updates the Gift Aid total.
- * @param {HTMLElement} elem The element that has changed.
- * @param {string} totalSelector selector of the chosen total field.
- * @returns {object} The donation and gift aid total.
- */
-function getTotalAmount(elem, totalSelector) {
-  if (! (elem instanceof HTMLInputElement) || ! elem.closest(totalSelector)) {
-    return '';
-  }
-  const totalValueStr = elem.value;
-  const totalValueFloat = parseFloat(totalValueStr);
-  if (! totalValueFloat) {
-    return '';
-  }
-  const giftAidAmount = totalValueFloat * 1.25;
-
-  return {
-    donation: totalValueFloat.toFixed(2),
-    giftAidTotal: giftAidAmount.toFixed(2)
-  };
-}
-
-/**
  * Updates the gift aid display.
  * @param {HTMLElement} gravityForm The form element.
  * @param {object} The donation and gift aid total.
  * @returns {void}
  */
-function updateGiftAidDisplay(gravityform, total) {
-  if (!total || !total.donation || !total.giftAidTotal) {
+function updateGiftAidDisplay(gravityform, donation, giftAidAmount) {
+  if (!donation || !giftAidAmount || !(gravityform instanceof HTMLElement)) {
     return;
   }
   const spanTotal = gravityform.querySelector('.gform_donation_total');
-  if (! (spanTotal instanceof HTMLSpanElement)) {
+  if (!(spanTotal instanceof HTMLSpanElement)) {
     return;
   }
   const spanTotalGift = gravityform.querySelector('.gform_donation_gifttotal');
-  if (! (spanTotalGift instanceof HTMLSpanElement)) {
+  if (!(spanTotalGift instanceof HTMLSpanElement)) {
     return;
   }
-  spanTotal.innerHTML = total.donation;
-  spanTotalGift.innerHTML = total.giftAidTotal;
+  spanTotal.innerHTML = donation;
+  spanTotalGift.innerHTML = giftAidAmount;
 }
