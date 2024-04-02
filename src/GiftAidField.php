@@ -8,7 +8,7 @@ use GF_Field;
 
 class GiftAidField extends GF_Field
 {
-    public string $type = 'giftaid';
+    public string $type = 'gift_aid';
 
     public function get_form_editor_field_title(): string
     {
@@ -39,6 +39,7 @@ class GiftAidField extends GF_Field
     public function get_form_editor_field_settings(): array
     {
         return [
+            'selected_price_field_setting',
             'label_setting',
             'description_setting',
             'rules_setting',
@@ -65,17 +66,26 @@ class GiftAidField extends GF_Field
     {
         $id = (int) $this->id;
         $giftaidImage = plugins_url('public/img/giftaid.svg', __DIR__);
+        $selectedPriceField = $this->selectedPriceField ?? '';
 
         ob_start();
         ?>
-        <div class="gift-box-wrapper bg-gray-50 rounded-br-4 p-7.5">
+        <div
+            class="gift-box-wrapper bg-gray-50 rounded-br-4 p-7.5"
+            <?php if (!empty($selectedPriceField)) : ?>
+                data-selected-price-field-id="<?php echo esc_attr($selectedPriceField); ?>"
+            <?php endif; ?>
+        >
+
             <div class="giftaid-logo mb-2">
                 <img src="<?php echo esc_url($giftaidImage); ?>" alt="GiftAid logo">
             </div>
+
             <div class="description text-primary font-medium text-xl mb-2">
                 <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                 <?php echo wpautop(wp_kses_post($this->get_calculated_gift())); ?>
             </div>
+
             <div class="gift-box-form-wrapper my-6 pb-6 border-b border-b-gray-200">
                 <div class="ginput_container ginput_container_checkbox mb-6">
                     <div class="gfield_checkbox" id="input_<?php echo esc_attr($id); ?>">
@@ -94,6 +104,7 @@ class GiftAidField extends GF_Field
                     </div>
                 </div>
             </div>
+
             <div class="details-description"><?php echo wp_kses_post($this->description); ?></div>
         </div>
         <?php
