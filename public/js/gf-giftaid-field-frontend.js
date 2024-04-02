@@ -13,15 +13,14 @@ function initGiftAid() {
     return;
   }
   window.gform.addAction('gform_input_change', function (elem) {
-      const value = elem.value;
-      const valueFloat = parseFloat(value);
-      const giftAidFloat = valueFloat * 1.25;
-      const donation = valueFloat.toFixed(2);
-      const giftAidAmount = giftAidFloat.toFixed(2);
-      if (!donation || !giftAidAmount) {
+      const donationValue = parseFloat(elem.value);
+      const giftAidValue = donationValue * 1.25;
+      const donationRounded = donationValue.toFixed(2);
+      const giftAidRounded = giftAidValue.toFixed(2);
+      if (!donationRounded || !giftAidRounded) {
         return;
       }
-      updateGiftAidDisplay(gravityForm, donation, giftAidAmount);
+      updateGiftAidDisplay(gravityForm, donationRounded, giftAidRounded);
     }, 10);
 }
 
