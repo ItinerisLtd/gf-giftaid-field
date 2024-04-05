@@ -12,16 +12,31 @@ function initGiftAid() {
   if (!totalSelector) {
     return;
   }
-  window.gform.addAction('gform_input_change', function (elem) {
-      const donationValue = parseFloat(elem.value);
+  window.gform.addAction(
+    'gform_input_change',
+    function (elem) {
+      if (
+        !(elem instanceof HTMLInputElement) ||
+        !elem.closest(totalSelector) ||
+        !elem.value
+      ) {
+        return;
+      }
+      const sanitizedValue = elem.value.replace(/[^0-9.]/g, '');
+      const donationValue = parseFloat(sanitizedValue);
       const giftAidValue = donationValue * 1.25;
+      if (!donationValue || !giftAidValue) {
+        return;
+      }
       const donationRounded = donationValue.toFixed(2);
       const giftAidRounded = giftAidValue.toFixed(2);
       if (!donationRounded || !giftAidRounded) {
         return;
       }
       updateGiftAidDisplay(gravityForm, donationRounded, giftAidRounded);
-    }, 10);
+    },
+    10,
+  );
 }
 
 /**
