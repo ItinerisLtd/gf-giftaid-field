@@ -74,6 +74,9 @@ class GfGiftAidField
         <?php
     }
 
+    /**
+     * Get the value of a field in a specific form by type.
+     */
     public static function getExistingFieldValue(int $form_id, string $field_key, string $gf_field_type): mixed
     {
         $form = GFAPI::get_form($form_id);
@@ -88,12 +91,8 @@ class GfGiftAidField
         if (!($field instanceof GF_Field)) {
             return null;
         }
-        $chosen_field = $field[$field_key] ?? '';
-        if (empty($chosen_field)) {
-            return null;
-        }
 
-        return $chosen_field;
+        return $field[$field_key] ?? null;
     }
 
     /**
