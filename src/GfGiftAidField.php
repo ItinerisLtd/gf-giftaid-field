@@ -23,6 +23,7 @@ class GfGiftAidField
         GFAddOn::register(AddOn::class);
 
         add_action('gform_field_standard_settings', [static::class, 'addSelectedPriceFieldSetting'], 10, 2);
+        add_action('gform_editor_js',  [static::class, 'addSelectedPriceFieldScript']);
     }
 
     /**
@@ -64,6 +65,31 @@ class GfGiftAidField
                 <?php endforeach; ?>
             </select>
         </li>
+    <?php
+    }
+
+    public static function addSelectedPriceFieldScript()
+    {
+    ?>
+        <script type='text/javascript'>
+            //adding setting to fields of type "text"
+            fieldSettings.text += ', .selected_price_field_setting';
+            // Update the field settings when the field is loaded in the form editor
+            jQuery(document).on('gform_load_field_settings', function(event, field, form) {
+                if (!field || !field.type || 'gift_aid' !== field.type) {
+                    return;
+                }
+                const savedValue = rgar(field, 'selectedPriceField');
+                if (!savedValue) {
+                    return;
+                }
+                const selectedPriceDropdown = document.querySelector('#selected_price_field_dropdown');
+                if (!(selectedPriceDropdown instanceof HTMLSelectElement)) {
+                    return;
+                }
+                selectedPriceDropdown.value = savedValue;
+            });
+        </script>
 <?php
     }
 
