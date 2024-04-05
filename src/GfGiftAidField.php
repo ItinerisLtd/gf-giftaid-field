@@ -91,8 +91,12 @@ class GfGiftAidField
         if (!($field instanceof GF_Field)) {
             return null;
         }
+        $chosen_field = $field[$field_key] ?? '';
+        if (empty($chosen_field)) {
+            return null;
+        }
 
-        return $field[$field_key] ?? null;
+        return $chosen_field;
     }
 
     /**
