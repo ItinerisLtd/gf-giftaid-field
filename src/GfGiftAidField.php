@@ -63,9 +63,7 @@ class GfGiftAidField
                     }
                     ?>
 
-                    <option value="<?php echo esc_attr($field_id); ?>">
-                        <?php echo esc_html($field_label); ?>
-                    </option>
+                    <option value="<?php echo esc_attr($field_id); ?>"><?php echo esc_html($field_label); ?></option>
                 <?php endforeach; ?>
             </select>
         </li>
@@ -83,11 +81,11 @@ class GfGiftAidField
                 if (!field || !field.type || 'gift_aid' !== field.type) {
                     return;
                 }
-                const savedValue = rgar(field, 'selectedPriceField');
+                var savedValue = rgar(field, 'selectedPriceField');
                 if (!savedValue) {
                     return;
                 }
-                const selectedPriceDropdown = document.querySelector('#selected_price_field_dropdown');
+                var selectedPriceDropdown = document.querySelector('#selected_price_field_dropdown');
                 if (!(selectedPriceDropdown instanceof HTMLSelectElement)) {
                     return;
                 }
