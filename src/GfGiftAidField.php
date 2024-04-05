@@ -23,7 +23,7 @@ class GfGiftAidField
         GFAddOn::register(AddOn::class);
 
         add_action('gform_field_standard_settings', [static::class, 'addSelectedPriceFieldSetting'], 10, 2);
-        add_action('gform_editor_js',  [static::class, 'addSelectedPriceFieldScript']);
+        add_action('gform_editor_js', [static::class, 'addSelectedPriceFieldScript']);
     }
 
     /**
@@ -43,13 +43,17 @@ class GfGiftAidField
             return;
         }
 
-?>
+        ?>
         <li class="selected_price_field_setting field_setting">
             <label for="selected_price_field_dropdown" class="section_label">
                 <?php esc_html_e('Price Field', 'itineris-gf-giftaid-field'); ?>
             </label>
 
-            <select name="donation_total" id="selected_price_field_dropdown" onchange="SetFieldProperty('selectedPriceField', this.value);">
+            <select
+                name="donation_total"
+                id="selected_price_field_dropdown"
+                onchange="SetFieldProperty('selectedPriceField', this.value);"
+            >
                 <option value="">--Please select a field--</option>
 
                 <?php foreach ($field_options as $field_id => $field_label) : ?>
@@ -65,12 +69,12 @@ class GfGiftAidField
                 <?php endforeach; ?>
             </select>
         </li>
-    <?php
+        <?php
     }
 
-    public static function addSelectedPriceFieldScript()
+    public static function addSelectedPriceFieldScript(): void
     {
-    ?>
+        ?>
         <script type='text/javascript'>
             //adding setting to fields of type "text"
             fieldSettings.text += ', .selected_price_field_setting';
@@ -90,7 +94,7 @@ class GfGiftAidField
                 selectedPriceDropdown.value = savedValue;
             });
         </script>
-<?php
+        <?php
     }
 
     /**
