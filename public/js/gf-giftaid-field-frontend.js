@@ -4,17 +4,25 @@ document.addEventListener('DOMContentLoaded', initGiftAid);
  * Updates the gift aid display, based on a chosen field changing.
  */
 function initGiftAid() {
-  const gravityForm = document.querySelector('.gform_wrapper');
+  const gravityForm = document.querySelector(".gform_wrapper");
   if (!(gravityForm instanceof HTMLElement)) {
     return;
   }
-  const totalSelector = totalFieldSelector(gravityForm, '.ginput_amount');
+  const totalSelector = totalFieldSelector(gravityForm, ".ginput_amount");
   if (!totalSelector) {
     return;
   }
-  window.gform.addAction('gform_input_change', function (elem) {
-      const donationValue = parseFloat(elem.value);
+  window.gform.addAction("gform_input_change", function (elem) {
+      if (!(elem instanceof HTMLInputElement) || !elem.closest(totalSelector) || !elem.value) {
+        return;
+      }
+      const regex = new RegExp('[^0-9.]', 'g');
+      const sanitizedValue = elem.value.replace(regex, '');
+      const donationValue = parseFloat(sanitizedValue);
       const giftAidValue = donationValue * 1.25;
+      if (!donationValue || !giftAidValue) {
+        return;
+      }
       const donationRounded = donationValue.toFixed(2);
       const giftAidRounded = giftAidValue.toFixed(2);
       if (!donationRounded || !giftAidRounded) {
