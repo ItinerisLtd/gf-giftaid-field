@@ -33,6 +33,10 @@ class GfGiftAidField
         if (25 !== $position || empty($form_id)) {
             return;
         }
+        $exists = GFAPI::form_id_exists($form_id);
+        if (empty($exists)) {
+            return;
+        }
         $field_options = static::getFormFields($form_id);
         if (empty($field_options)) {
             return;
@@ -98,11 +102,6 @@ class GfGiftAidField
      */
     public static function getFormFields(int $form_id): array
     {
-        $exists = GFAPI::form_id_exists($form_id);
-        if (empty($exists)) {
-            return [];
-        }
-
         $form = GFAPI::get_form($form_id);
         $fields = $form['fields'] ?? [];
         if (empty($fields) || !is_array($fields)) {
