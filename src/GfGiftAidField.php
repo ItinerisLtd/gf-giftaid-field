@@ -38,13 +38,17 @@ class GfGiftAidField
             return;
         }
         $selected_value = static::getExistingFieldValue($form_id, 'selectedPriceField', 'gift_aid') ?? '';
-?>
+
+        ?>
         <li class="selected_price_field_setting field_setting">
             <label for="selected_price_field_dropdown" class="section_label">
                 <?php esc_html_e('Price Field', 'itineris-gf-giftaid-field'); ?>
             </label>
 
-            <select name="donation_total" id="selected_price_field_dropdown" onchange="SetFieldProperty('selectedPriceField', this.value);">
+            <select
+                name="donation_total" id="selected_price_field_dropdown"
+                onchange="SetFieldProperty('selectedPriceField', this.value);"
+            >
                 <option value="">--Please select a field--</option>
 
                 <?php foreach ($field_options as $field_id => $field_label) : ?>
@@ -54,13 +58,16 @@ class GfGiftAidField
                     }
                     ?>
 
-                    <option value="<?php echo esc_attr($field_id); ?>" <?php echo $selected_value === $field_id ? 'selected' : '' ?>>
+                    <option
+                        value="<?php echo esc_attr($field_id); ?>"
+                        <?php echo $selected_value === $field_id ? 'selected' : ''; ?>
+                    >
                         <?php echo esc_html($field_label); ?>
                     </option>
                 <?php endforeach; ?>
             </select>
         </li>
-<?php
+        <?php
     }
 
     public static function getExistingFieldValue(int $form_id, string $field_key, string $gf_field_type): mixed
