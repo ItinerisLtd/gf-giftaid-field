@@ -1,10 +1,12 @@
-document.addEventListener('DOMContentLoaded', initGiftAid);
+if (window.jQuery) {
+  window.jQuery(document).on('gform_post_render', initGiftAid);
+}
 
 /**
  * Updates the gift aid display, based on a chosen field changing.
  */
-function initGiftAid() {
-  const gravityForm = document.querySelector('.gform_wrapper');
+function initGiftAid(_, form_id) {
+  const gravityForm = document.getElementById('gform_wrapper_' + form_id);
   if (!(gravityForm instanceof HTMLElement)) {
     return;
   }
