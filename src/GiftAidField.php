@@ -149,7 +149,7 @@ class GiftAidField extends GF_Field
         $totalAmt = $donation + $amount;
         $displayNum = number_format((float) $totalAmt, 2, '.', '');
         $searchReplace = [
-            '{{ donation }}' => "<span class=\"gform_donation_total\">£{$donation}</span>",
+            '{{ donation }}' => "<span>£<span class=\"gform_donation_total\">{$donation}</span></span>",
             // phpcs:ignore Generic.Files.LineLength.TooLong
             '{{ calculated_giftaid }}' => "<strong>£<span class=\"gform_donation_gifttotal\">{$displayNum}</span></strong>",
         ];
