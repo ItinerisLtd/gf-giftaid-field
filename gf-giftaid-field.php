@@ -3,7 +3,7 @@
  * Plugin Name:     Gravity Forms Gift Aid field
  * Plugin URI:      https://www.itineris.co.uk/
  * Description:     Gift aid field for Gravity Forms
- * Version:         0.1.0
+ * Version:         1.0.3
  * Author:          Itineris Limited
  * Author URI:      https://www.itineris.co.uk/
  * Text Domain:     itineris-gf-giftaid-field
