@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Itineris\GfGiftaidField;
 
 use GF_Field;
+use GFFormsModel;
 
 class GiftAidField extends GF_Field
 {
@@ -41,6 +42,8 @@ class GiftAidField extends GF_Field
         return [
             'selected_price_field_setting',
             'label_setting',
+            'label_placement_setting',
+            'admin_label_setting',
             'description_setting',
             'rules_setting',
             'error_message_setting',
@@ -48,11 +51,6 @@ class GiftAidField extends GF_Field
             'conditional_logic_field_setting',
             'checkbox_label_setting',
         ];
-    }
-
-    public function is_value_submission_array(): bool
-    {
-        return true;
     }
 
     /**
@@ -65,51 +63,71 @@ class GiftAidField extends GF_Field
     public function get_field_input($form, $value = '', $entry = null): string
     {
         $id = (int) $this->id;
-        $is_form_editor = $this->is_form_editor();
+        $is_form_editor  = $this->is_form_editor();
+        $target_input_id = $this->get_first_input_id($form);
+        $extra_describedby_ids = [];
+        if (! empty($this->description)) {
+            $extra_describedby_ids = ["gfield_giftaid_description_{$form['id']}_{$this->id}"];
+        }
+        $aria_describedby = $this->get_aria_describedby($extra_describedby_ids);
+
         $giftaidImage = plugins_url('public/img/giftaid.svg', __DIR__);
         $selectedPriceField = $this->selectedPriceField ?? '';
 
         ob_start();
         ?>
         <div
-            class="gift-box-wrapper bg-gray-50 rounded-br-4 p-7.5"
+            class="ginput_container ginput_container_giftaid bg-gray-50 rounded-br-4 p-7.5"
             <?php if (!empty($selectedPriceField)) : ?>
-                data-selected-price-field-id="<?php echo esc_attr($selectedPriceField); ?>"
+            data-selected-price-field-id="<?php echo esc_attr($selectedPriceField); ?>"
             <?php endif; ?>
         >
-
             <div class="giftaid-logo mb-2">
-                <img src="<?php echo esc_url($giftaidImage); ?>" alt="GiftAid logo">
+                <img src="<?php echo esc_url($giftaidImage); ?>" alt="GiftAid logo" loading="lazy">
             </div>
+
+            <?php if (! empty($this->description) && $this->is_description_above($form)) : ?>
+                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                <?php echo $this->get_description($this->description, 'gfield_description'); ?>
+            <?php endif; ?>
 
             <div class="description text-primary font-medium text-xl mb-2">
                 <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                 <?php echo wpautop(wp_kses_post($this->get_calculated_gift())); ?>
             </div>
 
-            <div class="gift-box-form-wrapper my-6 pb-6 border-b border-b-gray-200">
-                <div class="ginput_container ginput_container_checkbox mb-6">
-                    <div class="gfield_checkbox" id="input_<?php echo esc_attr($id); ?>">
-                        <div class="gchoice gchoice_<?php echo esc_attr($id); ?>">
-                            <input
-                                class="gfield-choice-input"
-                                id="gift-check-<?php echo esc_attr($id); ?>"
-                                name="input_<?php echo esc_attr($id); ?>"
-                                type="checkbox"
-                                value="Yes"
-                                <?php if (! $is_form_editor) : ?>
-                                    <?php checked('Yes', $value); ?>
-                                <?php endif; ?>
-                            >
-                            <label for="gift-check-<?php echo esc_attr($id); ?>">
-                                <?php echo wp_kses_post($this->checkboxLabel); ?>
-                            </label>
-                        </div>
-                    </div>
-                </div>
+            <div class="gfield_giftaid gift-box-form-wrapper my-6 pb-6 border-b border-b-gray-200">
+                <input
+                    id="<?php echo esc_attr($target_input_id); ?>"
+                    name="input_<?php echo esc_attr($id); ?>"
+                    type="checkbox"
+                    value="1"
+                    <?php if (! $is_form_editor) : ?>
+                        <?php checked('1', $value); ?>
+                    <?php endif; ?>
+                    <?php if ($is_form_editor) : ?>
+                        disabled="disabled"
+                    <?php endif; ?>
+                    <?php echo esc_html($this->get_tabindex()); ?>
+                    <?php if (! empty($aria_describedby)) : ?>
+                        <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                        <?php echo $aria_describedby; ?>
+                    <?php endif; ?>
+                >
+                <label
+                    class="gform-field-label gform-field-label--type-inline gfield_giftaid_label"
+                    <?php if (! empty($target_input_id)) : ?>
+                        for="<?php echo esc_attr($target_input_id); ?>"
+                    <?php endif; ?>
+                >
+                    <?php echo wp_kses_post($this->checkboxLabel); ?>
+                </label>
             </div>
 
-            <div class="details-description"><?php echo wp_kses_post($this->description); ?></div>
+            <?php if (! empty($this->description) && ! $this->is_description_above($form)) : ?>
+                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                <?php echo $this->get_description($this->description, 'gfield_description'); ?>
+            <?php endif; ?>
         </div>
         <?php
 
@@ -165,9 +183,114 @@ class GiftAidField extends GF_Field
         );
     }
 
+    protected function isValueYes(string $value): bool
+    {
+        return in_array(strtolower($value), ['1', 'yes'], true);
+    }
+
+    /**
+     * @param string|array $value    The field value.
+     * @param array        $entry    The Entry Object currently being processed.
+     * @param string       $field_id The field or input ID currently being processed.
+     * @param array        $columns  The properties for the columns being displayed on the entry list page.
+     * @param array        $form     The Form Object currently being processed.
+     *
+     * @return string
+     */
+    public function get_value_entry_list( $value, $entry, $field_id, $columns, $form ): string
+    {
+        if ($this->isValueYes($value)) {
+            return esc_html__('Yes', 'itineris-gf-giftaid-field');
+        }
+
+        return esc_html__('No', 'itineris-gf-giftaid-field');
+    }
+
+    /**
+     * @phpcs:disable Generic.Files.LineLength.TooLong
+     *
+     * @param string|array $value    The field value.
+     * @param string       $currency The entry currency code.
+     * @param bool         $use_text When processing choice based fields should the choice text be returned instead of the value.
+     * @param string       $format   The format requested for the location the merge is being used. Possible values: html, text or url.
+     * @param string       $media    The location where the value will be displayed. Possible values: screen or email.
+     *
+     * @return string
+     */
+    public function get_value_entry_detail($value, $currency = '', $use_text = false, $format = 'html', $media = 'screen'): string
+    {
+        // phpcs:enable Generic.Files.LineLength.TooLong
+        if ($this->isValueYes($value)) {
+            return esc_html__('Yes', 'itineris-gf-giftaid-field');
+        }
+
+        return esc_html__('No', 'itineris-gf-giftaid-field');
+    }
+
+    /**
+     * @phpcs:disable Generic.Files.LineLength.TooLong
+     *
+     * @param array      $entry    The entry currently being processed.
+     * @param string     $input_id The field or input ID.
+     * @param bool|false $use_text When processing choice based fields should the choice text be returned instead of the value.
+     * @param bool|false $is_csv   Is the value going to be used in the .csv entries export.
+     *
+     * @return string|array
+     */
+    public function get_value_export($entry, $input_id = '', $use_text = false, $is_csv = false): string|array
+    {
+        // phpcs:enable Generic.Files.LineLength.TooLong
+        if (empty($input_id)) {
+            return '';
+        }
+
+        $value = parent::get_value_export($entry, $input_id, $use_text, $is_csv);
+        if ($this->isValueYes($value)) {
+            return esc_html__('Yes', 'itineris-gf-giftaid-field');
+        }
+
+        return esc_html__('No', 'itineris-gf-giftaid-field');
+    }
+
     public function sanitize_settings(): void
     {
         parent::sanitize_settings();
         $this->checkboxLabel = $this->maybe_wp_kses($this->checkboxLabel);
+    }
+
+    public function get_filter_settings(): array
+    {
+        $filter_settings = [
+            'key' => $this->id,
+            'text' => GFFormsModel::get_label($this),
+            'preventMultiple' => false,
+            'operators' => $this->get_filter_operators(),
+        ];
+
+        $values = $this->get_filter_values();
+        if (! empty($values)) {
+            $filter_settings['values'] = $values;
+        }
+
+        return $filter_settings;
+    }
+
+    public function get_filter_operators(): array
+    {
+        return ['is', 'isnot'];
+    }
+
+    public function get_filter_values(): array
+    {
+        return [
+            [
+                'value' => '1',
+                'text'  => esc_html__('Yes', 'itineris-gf-giftaid-field'),
+            ],
+            [
+                'value' => '0',
+                'text'  => esc_html__('No', 'itineris-gf-giftaid-field'),
+            ],
+        ];
     }
 }

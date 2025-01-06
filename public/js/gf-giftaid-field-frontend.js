@@ -16,7 +16,7 @@ function initGiftAid(_, form_id) {
   }
   window.gform.addAction(
     'gform_input_change',
-    function (elem) {
+    function(elem) {
       if (
         !(elem instanceof HTMLInputElement) ||
         !elem.closest(totalSelector) ||
@@ -49,7 +49,7 @@ function initGiftAid(_, form_id) {
  * @returns {string} The class of the total field.
  */
 function totalFieldSelector(gravityForm, fallback) {
-  const giftAidComponent = gravityForm.querySelector('.gift-box-wrapper');
+  const giftAidComponent = gravityForm.querySelector('.ginput_container_giftaid');
   if (!(giftAidComponent instanceof HTMLElement)) {
     return fallback;
   }

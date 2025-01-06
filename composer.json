@@ -21,6 +21,11 @@
       "name": "Igor Tkachenko",
       "email": "igor.tkachenko@itineris.co.uk",
       "role": "Developer"
+    },
+    {
+      "name": "Lee Hanbury-Pickett",
+      "email": "lee.hanbury-pickett@itineris.co.uk",
+      "role": "Developer"
     }
   ],
   "require": {
@@ -37,7 +42,10 @@
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",
-    "itinerisltd/itineris-wp-coding-standards": "^1.0"
+    "itinerisltd/itineris-wp-coding-standards": "^1.0",
+    "itinerisltd/gravityforms": "^2.9",
+    "roots/wordpress-no-content": "^6.7",
+    "roots/wordpress": "^6.7"
   },
   "extra": {
     "branch-alias": {
@@ -52,7 +60,28 @@
   },
   "config": {
     "allow-plugins": {
-      "dealerdirect/phpcodesniffer-composer-installer": true
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "composer/installers": true,
+      "roots/wordpress-core-installer": true
+    }
+  },
+  "repositories": {
+    "private-packagist": {
+      "type": "composer",
+      "url": "https://repo.packagist.com/itinerisltd/"
+    }
+  },
+  "extra": {
+    "installer-paths": {
+      "wordpress/wp-content/mu-plugins/{$name}/": [
+        "type:wordpress-muplugin"
+      ],
+      "wordpress/wp-content/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "wordpress/wp-content/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
     }
   }
 }
