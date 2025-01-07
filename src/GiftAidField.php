@@ -65,6 +65,7 @@ class GiftAidField extends GF_Field
     public function get_field_input($form, $value = '', $entry = null): string
     {
         $id = (int) $this->id;
+        $is_form_editor = $this->is_form_editor();
         $giftaidImage = plugins_url('public/img/giftaid.svg', __DIR__);
         $selectedPriceField = $this->selectedPriceField ?? '';
 
@@ -96,6 +97,9 @@ class GiftAidField extends GF_Field
                                 name="input_<?php echo esc_attr($id); ?>"
                                 type="checkbox"
                                 value="Yes"
+                                <?php if (! $is_form_editor) : ?>
+                                    <?php checked('Yes', $value); ?>
+                                <?php endif; ?>
                             >
                             <label for="gift-check-<?php echo esc_attr($id); ?>">
                                 <?php echo wp_kses_post($this->checkboxLabel); ?>
