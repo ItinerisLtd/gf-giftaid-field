@@ -11,7 +11,7 @@ use GFForms;
 
 class GfGiftAidField
 {
-    public const VERSION = '1.0.3';
+    public const VERSION = '1.0.4';
 
     public static function run(): void
     {

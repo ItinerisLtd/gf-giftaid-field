@@ -6,7 +6,8 @@
     "gravity forms",
     "gift",
     "aid",
-    "giftaid"
+    "giftaid",
+    "wordpress"
   ],
   "homepage": "https://itinerisltd.github.io/gf-giftaid-field/",
   "license": "MIT",
@@ -16,6 +17,11 @@
       "email": "hello@itineris.co.uk",
       "homepage": "https://itineris.co.uk/",
       "role": "Company"
+    },
+    {
+      "name": "Lee Hanbury-Pickett",
+      "email": "lee.hanbury-pickett@itineris.co.uk",
+      "role": "Developer"
     },
     {
       "name": "Igor Tkachenko",
