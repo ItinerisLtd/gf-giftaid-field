@@ -43,7 +43,7 @@
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",
-    "itinerisltd/itineris-wp-coding-standards": "^1.0"
+    "itinerisltd/itineris-wp-coding-standards": "^2.0"
   },
   "extra": {
     "branch-alias": {
