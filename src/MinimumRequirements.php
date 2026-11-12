@@ -14,10 +14,10 @@ enum MinimumRequirements: string
     {
         return [
             'wordpress' => [
-                'version' => static::WORDPRESS_VERSION->value,
+                'version' => self::WORDPRESS_VERSION->value,
             ],
             'php' => [
-                'version' => static::PHP_VERSION->value,
+                'version' => self::PHP_VERSION->value,
             ],
         ];
     }
